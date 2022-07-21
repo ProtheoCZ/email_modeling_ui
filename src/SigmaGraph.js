@@ -1,12 +1,11 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { SigmaContainer, useLoadGraph } from "@react-sigma/core";
+import { SigmaContainer } from "@react-sigma/core";
 import Graph from "graphology";
 import "@react-sigma/core/lib/react-sigma.min.css";
 
 function parseJsonGraph(graph){
     let loadedGraph = new Graph()
-    console.log(graph)
 
     for (let node of graph.nodes){
         let nodeSize = node.size
@@ -25,38 +24,37 @@ function parseJsonGraph(graph){
 
 }
 
-export const LoadGraph = () =>{
-    const loadGraph = useLoadGraph();
+
+export const SigmaGraph = (props)=>{
+    const style = {
+        height: "1000px",
+        width : "1800px"
+    };
+
+    const [graph, setGraph] = useState(new Graph())
 
     const url = 'http://127.0.0.1:8000/emailModeling/getGraph/'
+
     useEffect(() => {
-        axios.get(url)
+        if(props.selectedGraph !== undefined){
+            axios.post(url,props.selectedGraph)
             .then(
             response =>{
                 console.log(response)
-                loadGraph(parseJsonGraph(response.data))
+                setGraph(parseJsonGraph(response.data))
             }
             ).catch((err)=>{
                 console.log(err)
             }
             )
-    },[loadGraph])
 
-    return null;
-}
+        }
+    },[props.selectedGraph])
 
-export const SigmaGraph = ()=>{
-        const style = {
-        height: "1000px",
-        width : "1800px"
-    };
 
     return(
         <div>
-            <h1>sigma test</h1>
-            <SigmaContainer style={style}>
-                <LoadGraph></LoadGraph>
-            </SigmaContainer>
+            <SigmaContainer style={style} graph={graph}/>
         </div>
     )
 }

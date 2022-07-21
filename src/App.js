@@ -1,6 +1,8 @@
 import {Sigma, LoadJSON} from 'react-sigma';
 import './App.css';
 import React from "react";
+import Dropdown from "react-bootstrap/Dropdown";
+import {GraphSelect} from "./GraphSelect";
 
 function App() {
     const style = {
@@ -15,6 +17,7 @@ function App() {
            <LoadJSON path = 'editedGraphBigger.json'></LoadJSON>
        </Sigma>
     </div>
+
   );
 }
 
