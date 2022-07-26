@@ -8,10 +8,10 @@ function parseJsonGraph(graph){
     let loadedGraph = new Graph()
 
     for (let node of graph.nodes){
-        let nodeSize = node.size
-        if(nodeSize>=10){
-            nodeSize = 10
-        }
+            let nodeSize = node.size
+            if(nodeSize>=10){
+                nodeSize = 10
+            }
 
         loadedGraph.addNode(node.id,{x: node.x, y: node.y, size: nodeSize, color: node.color, label: node.label})
     }
@@ -27,8 +27,8 @@ function parseJsonGraph(graph){
 
 export const SigmaGraph = (props)=>{
     const style = {
-        height: "1000px",
-        width : "1800px"
+        height: "720px",
+        width : "1280px"
     };
 
     const [graph, setGraph] = useState(new Graph())
