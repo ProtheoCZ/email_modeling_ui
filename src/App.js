@@ -1,64 +1,49 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {SigmaGraph} from "./SigmaGraph";
-
 import {Form} from "react-bootstrap";
 import {AlgorithmTriggerButton} from "./AlgorithmTriggerButton";
 import Graph from "graphology";
+
 
 
 export const App = () =>{
     const [state, setState] = useState({
             graphList :  undefined,
             selectedGraph: undefined,
-            graphToRender : new Graph()
+            graphToRender : undefined
     })
+
+    const [visibility,setVisibility] = useState(true)
+
+    function handleVisibilityChange() {
+        setVisibility(false)
+    }
 
     const selectDefaultMessage = "Select graph to display"
 
-    function parseJsonGraph(graph){
-    let loadedGraph = new Graph()
-
-            for (let node of graph.nodes) {
-                let nodeSize = node.size
-                if (nodeSize >= 10) {
-                    nodeSize = 10
-                }
-
-                loadedGraph.addNode(node.id, {
-                    x: node.x,
-                    y: node.y,
-                    size: nodeSize,
-                    color: node.color,
-                    label: node.label
-                })
-            }
-
-            for (let edge of graph.edges) {
-                loadedGraph.addEdge(edge.source, edge.target, {color: edge.color, size: edge.size, id: edge.id})
-            }
-
-    return loadedGraph
-
-}
 
    async function handleChange(event){
+        setVisibility(true)
+
         const url = 'http://127.0.0.1:8000/emailModeling/getGraph/'
         let loadedGraph = new Graph()
+
         if(event.target.value !== selectDefaultMessage){
-            console.log("if proc")
+
             await axios.post(url,event.target.value)
                 .then(
-                response =>{
-                    console.log(response)
-                    loadedGraph = parseJsonGraph(response.data)
+                    response =>{
+                        console.log(response)
 
-                }
+                        loadedGraph = response.data
+                    }
                 )
-                    .catch((err)=>{
+                .catch(
+                    (err)=>{
                         console.log(err)
                     }
-                            )
+                    )
 
             }
 
@@ -67,6 +52,8 @@ export const App = () =>{
             selectedGraph: event.target.value,
             graphToRender: loadedGraph
         })
+
+
 
 
     }
@@ -101,7 +88,7 @@ export const App = () =>{
             <option key={i} value={graph}>{graph}</option>
         )
         displayedContent =
-            <Form>
+            <Form className='form'>
                 <Form.Select onChange={(event)=>handleChange(event)}>
                     <option>{selectDefaultMessage}</option>
                     {SelectContent}
@@ -109,14 +96,16 @@ export const App = () =>{
             </Form>
     }
     else {
-        displayedContent = <h1>fail</h1>
+        displayedContent = <h1>failed to load graph list</h1>
     }
 
     return (
         <div>
             {displayedContent}
-            {/*<SigmaGraph graphToRender = {state.graphToRender}/>*/}
-            <AlgorithmTriggerButton selectedGraph = {state.selectedGraph}/>
+
+            <SigmaGraph  visibility= {visibility} graphToRender = {state.graphToRender}/>
+            <AlgorithmTriggerButton onVisibilityChange = {handleVisibilityChange} selectedGraph = {state.selectedGraph}/>
+
         </div>
     )
 }
