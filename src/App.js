@@ -52,14 +52,7 @@ export const App = () =>{
             selectedGraph: event.target.value,
             graphToRender: loadedGraph
         })
-
-
-
-
     }
-
-
-
 
     useEffect(() => {
         const getGraphList = () =>{
@@ -102,10 +95,8 @@ export const App = () =>{
     return (
         <div>
             {displayedContent}
-
             <SigmaGraph  visibility= {visibility} graphToRender = {state.graphToRender}/>
             <AlgorithmTriggerButton onVisibilityChange = {handleVisibilityChange} selectedGraph = {state.selectedGraph}/>
-
         </div>
     )
 }

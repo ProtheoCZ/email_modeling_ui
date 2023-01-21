@@ -20,7 +20,6 @@ export const AlgorithmTriggerButton = (props) => {
                     setGraphs(response.data.graphs)
                     console.log(response.data.graphs)
                     setDisplayedContent(<SigmaGraph visibility = {true} graphToRender = {response.data.graphs[0]}/>)
-
                 }
             )
             .catch((error) =>
@@ -28,6 +27,24 @@ export const AlgorithmTriggerButton = (props) => {
             )
 
     }
+
+    async function handleGwClick(){
+        props.onVisibilityChange()
+        setI(0)
+        const url = 'http://127.0.0.1:8000/emailModeling/getGwTree/'
+        await axios.get(url)
+            .then(
+                response =>{
+                    setGraphs(response.data.graphs)
+                    console.log(response.data.graphs)
+                    setDisplayedContent(<SigmaGraph visibility = {true} graphToRender = {response.data.graphs[0]}/>)
+                }
+            )
+            .catch((error) =>
+                console.log("gw tree graphList error " + error )
+            )
+    }
+
 
     function handleNextClick(){
         setI(i+1)
@@ -45,6 +62,7 @@ export const AlgorithmTriggerButton = (props) => {
         <div>
             {displayedContent}
             <Button variant={'primary'} onClick={handleClick}>Trigger Algorithm</Button>
+            <Button variant={'primary'} onClick={handleGwClick}>Generate GW tree</Button>
             <Button variant={'success'} onClick={handleNextClick} disabled={i<0 || i+1>= graphs.length}>next stage</Button>
             <Button variant={'danger'} onClick={handlePrevClick} disabled={i<=0}>previous stage</Button>
             <h1>{i+1}</h1>
