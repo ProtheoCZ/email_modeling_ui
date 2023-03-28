@@ -16,6 +16,8 @@ export const App = () =>{
 
     const [visibility,setVisibility] = useState(true)
 
+    const [renderGraph, setRenderGraph] = useState(true)
+
     function handleVisibilityChange() {
         setVisibility(false)
     }
@@ -29,7 +31,7 @@ export const App = () =>{
         const url = 'http://127.0.0.1:8000/emailModeling/getGraph/'
         let loadedGraph = new Graph()
 
-        if(event.target.value !== selectDefaultMessage){
+        if(event.target.value !== selectDefaultMessage  && renderGraph){
 
             await axios.post(url,event.target.value)
                 .then(
@@ -52,6 +54,10 @@ export const App = () =>{
             selectedGraph: event.target.value,
             graphToRender: loadedGraph
         })
+    }
+
+    function handleCheck(event){
+        setRenderGraph(!renderGraph)
     }
 
     useEffect(() => {
@@ -92,10 +98,27 @@ export const App = () =>{
         displayedContent = <h1>failed to load graph list</h1>
     }
 
+    let displayedGraph
+    if(renderGraph){
+        displayedGraph = <SigmaGraph  visibility= {visibility} graphToRender = {state.graphToRender}/>
+    }
+    else{
+        displayedGraph = <h1>Graph rendering disabled</h1>
+    }
+
     return (
         <div>
-            {displayedContent}
-            <SigmaGraph  visibility= {visibility} graphToRender = {state.graphToRender}/>
+            <div style={{flexDirection:'row',display:"flex"}}>
+                {displayedContent}
+                <p style={{fontSize: 22, marginLeft:"10px"}}>Do not render Graph:</p>
+                <input
+                    type="checkbox"
+                    onChange={handleCheck}
+                    style={{width: "30px", height:"30px", marginTop:"4px", marginLeft: "6px"}}
+                />
+
+            </div>
+            {displayedGraph}
             <AlgorithmTriggerButton onVisibilityChange = {handleVisibilityChange} selectedGraph = {state.selectedGraph}/>
         </div>
     )
