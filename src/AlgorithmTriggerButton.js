@@ -13,7 +13,7 @@ export const AlgorithmTriggerButton = (props) => {
     async function handleClick(){
         props.onVisibilityChange()
         setI(0)
-        const url = 'http://127.0.0.1:8000/emailModeling/getColoring/'
+        const url = 'http://127.0.0.1:8000/emailModeling/getLnkColoring/'
         await axios.post(url,props.selectedGraph)
             .then(
                 response =>{
