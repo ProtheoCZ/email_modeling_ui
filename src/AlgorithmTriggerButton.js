@@ -63,6 +63,25 @@ export const AlgorithmTriggerButton = (props) => {
     }
 
 
+
+    async function handleRelClick(){
+        props.onVisibilityChange()
+        setI(0)
+        const url = 'http://127.0.0.1:8000/emailModeling/getRelatabilityColoring/'
+        await axios.post(url, props.selectedGraph)
+            .then(
+                response =>{
+                    setGraphs(response.data.graphs)
+                    console.log(response.data.graphs)
+                    setDisplayedContent(<SigmaGraph visibility = {true} graphToRender = {response.data.graphs[0]}/>)
+                }
+            )
+            .catch((error) =>
+                console.log("graphList error " + error )
+            )
+
+    }
+
     function handleNextClick(){
         setI(i+1)
         setDisplayedContent(<SigmaGraph visibility = {true} graphToRender = {graphs[i+1]}/>)
@@ -80,6 +99,7 @@ export const AlgorithmTriggerButton = (props) => {
             {displayedContent}
             <Button variant={'primary'} onClick={handleClick}>Trigger Algorithm</Button>
             <Button variant={'primary'} onClick={handleFullSimClick}>Trigger Full Simulation</Button>
+            <Button variant={'primary'} onClick={handleRelClick}>Trigger Relatability Algorithm</Button>
             <Button variant={'primary'} onClick={handleGwClick}>Generate GW Tree</Button>
             <Button variant={'success'} onClick={handleNextClick} disabled={i<0 || i+1>= graphs.length}>next stage</Button>
             <Button variant={'danger'} onClick={handlePrevClick} disabled={i<=0}>previous stage</Button>
