@@ -102,10 +102,14 @@ export const AlgorithmTriggerButton = (props) => {
     return (
         <div>
             {displayedContent}
-            <Button variant={'primary'} onClick={() => handleClick('getLnkColoring/')}>Trigger LNK Algorithm</Button>
-            <Button variant={'primary'} onClick={() => handleClick('getFullSim/')}>Trigger Full LNK Simulation</Button>
-            <Button variant={'primary'} onClick={() => handleClick('getRelatabilityColoring/')}>Trigger Relatability Algorithm</Button>
-            <Button variant={'primary'} onClick={() => handleClick('getGwTree/')}>Generate GW Tree</Button>
+            <Button variant={'primary'} onClick={() => handleClick('getLnkColoring/')}>LNK Algorithm</Button>
+            <Button variant={'primary'} onClick={() => handleClick('getFullSim/')}>Full LNK Simulation</Button>
+            <br/>
+            <Button variant={'warning'} onClick={() => handleClick('getRelatabilityColoring/')}>Relatability Algorithm</Button>
+            <Button variant={'warning'} onClick={() => handleClick('getFullRelatabilitySim/')}>Full Relatability Sim</Button>
+            <br/>
+            <Button variant={'secondary'} onClick={() => handleClick('getGwTree/')}>Generate GW Tree</Button>
+            <br/>
             <Button variant={'success'} onClick={handleNextClick} disabled={i<0 || i+1>= graphs.length}>next stage</Button>
             <Button variant={'danger'} onClick={handlePrevClick} disabled={i<=0}>previous stage</Button>
             <h1>{i+1}</h1>

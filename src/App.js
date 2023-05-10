@@ -31,7 +31,7 @@ export const App = () =>{
         const url = 'http://127.0.0.1:8000/emailModeling/getGraph/'
         let loadedGraph = new Graph()
 
-        if(event.target.value !== selectDefaultMessage){
+        if(event.target.value !== selectDefaultMessage && renderGraph){
 
             await axios.post(url,event.target.value)
                 .then(
