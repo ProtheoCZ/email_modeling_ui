@@ -28,10 +28,8 @@ function parseJsonGraph(graph){
 
 export const SigmaGraph = (props)=>{
     const style = {
-        height: "800px",
+        height: "600px",
         width : "1920px"
-        // height: "30%",
-        // width: "5%"
     };
 
 

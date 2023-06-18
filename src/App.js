@@ -4,8 +4,9 @@ import {SigmaGraph} from "./SigmaGraph";
 import {Form} from "react-bootstrap";
 import {AlgorithmTriggerButton} from "./AlgorithmTriggerButton";
 import Graph from "graphology";
+import config from "./config";
 
-
+const base_url = config.backendUrl + 'emailModeling/'
 
 export const App = () =>{
     const [state, setState] = useState({
@@ -28,7 +29,7 @@ export const App = () =>{
    async function handleChange(event){
         setVisibility(true)
 
-        const url = 'http://127.0.0.1:8000/emailModeling/getGraph/'
+        const url = base_url + 'getGraph/'
         let loadedGraph = new Graph()
 
         if(event.target.value !== selectDefaultMessage && renderGraph){
@@ -62,7 +63,7 @@ export const App = () =>{
 
     useEffect(() => {
         const getGraphList = () =>{
-            const url = 'http://127.0.0.1:8000/emailModeling/getGraphList/'
+            const url = base_url + 'getGraphList/'
             axios.get(url)
                 .then(
                     response => {
