@@ -58,6 +58,8 @@ export const AlgorithmTriggerButton = (props) => {
             <Button variant={'secondary'} onClick={() => handleClick('getGwTree/')}>Generate GW Tree</Button>
             <Button variant={'secondary'} onClick={() => handleClick('getFullGwSim/')}>Get Full GW Sim</Button>
             <br/>
+            <Button variant={'info'} onClick={() => handleClick('getRumorSim/')}>Rumor Algorithm</Button>
+            <br/>
             <Button variant={'success'} onClick={handleNextClick} disabled={i<0 || i+1>= graphs.length}>next stage</Button>
             <Button variant={'danger'} onClick={handlePrevClick} disabled={i<=0}>previous stage</Button>
             <h1>{i+1}</h1>
