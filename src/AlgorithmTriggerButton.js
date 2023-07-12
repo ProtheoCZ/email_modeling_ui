@@ -52,9 +52,6 @@ export const AlgorithmTriggerButton = (props) => {
             <Button variant={'primary'} onClick={() => handleClick('getLnkColoring/')}>LNK Algorithm</Button>
             <Button variant={'primary'} onClick={() => handleClick('getFullSim/')}>Full LNK Simulation</Button>
             <br/>
-            <Button variant={'warning'} onClick={() => handleClick('getRelatabilityColoring/')}>Relatability Algorithm</Button>
-            <Button variant={'warning'} onClick={() => handleClick('getFullRelatabilitySim/')}>Full Relatability Sim</Button>
-            <br/>
             <Button variant={'secondary'} onClick={() => handleClick('getGwTree/')}>Generate GW Tree</Button>
             <Button variant={'secondary'} onClick={() => handleClick('getFullGwSim/')}>Full GW Sim</Button>
             <br/>
